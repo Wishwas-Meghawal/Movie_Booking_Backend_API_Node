@@ -25,7 +25,7 @@ app.listen(port, async ()=>{
 
 
     try {
-        await mongoose.connect(process.env.DB_URL);
+        await mongoose.connect(process.env.DB_URL); // Mongodb Connection
         console.log("Successfully connected to Database");
     } catch (error) {
         console.log("Not able to connect Database",error);
