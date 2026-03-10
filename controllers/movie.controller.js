@@ -1,0 +1,32 @@
+const Movie = require('../models/movie.model.js');
+
+
+/**
+ * COntroller Function to Create a New Movie  
+ * @returns moive created
+ */
+
+const createMovie = async (req, res) =>{
+  try {
+    const movie = await Movie.create(req.body);
+
+    return res.status(201).json({
+      success: true,
+      error:{},
+      data: movie,
+      message: 'Successfully created a new movie',
+    })
+  } catch (error) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      error: error,
+      data: {},
+      message: "Something went wrong"
+    });
+  }
+}
+
+module.exports = {
+  createMovie
+}

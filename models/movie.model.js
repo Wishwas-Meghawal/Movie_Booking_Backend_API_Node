@@ -40,7 +40,7 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: "RELEASED"
     },
-},{timeseries: true});
+},{timestamps: true});
 
 
 const Movie = mongoose.model('Movie',movieSchema) // Create a new Model
