@@ -1,32 +1,59 @@
-const Movie = require('../models/movie.model.js');
-
+const { response } = require("express");
+const Movie = require("../models/movie.model.js");
 
 /**
- * COntroller Function to Create a New Movie  
+ * Controller Function to Create a New Movie
  * @returns moive created
  */
 
-const createMovie = async (req, res) =>{
+const createMovie = async (req, res) => {
   try {
     const movie = await Movie.create(req.body);
 
     return res.status(201).json({
       success: true,
-      error:{},
+      error: {},
       data: movie,
-      message: 'Successfully created a new movie',
-    })
+      message: "Successfully created a new movie",
+    });
   } catch (error) {
     console.log(err);
     return res.status(500).json({
       success: false,
       error: error,
       data: {},
-      message: "Something went wrong"
+      message: "Something went wrong",
     });
   }
-}
+};
+
+/**
+ * Controller Function to Delete  a Single Movie
+ * @returns moive deleted
+ */
+
+const deleteMovie = async (req, res) => {
+  try {
+    const response = await Movie.deleteOne({
+      _id: req.params.movieId,
+    });
+    return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Successfully Deleted Movie",
+      data: response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error,
+      message: "Something Want Wrong",
+      data: {},
+    });
+  }
+};
 
 module.exports = {
-  createMovie
-}
+  createMovie,
+  deleteMovie,
+};
