@@ -35,7 +35,7 @@ const createMovie = async (req, res) => {
 const deleteMovie = async (req, res) => {
   try {
     const response = await Movie.deleteOne({
-      _id: req.params.movieId,
+      _id: req.params.id,
     });
     return res.status(200).json({
       success: true,
@@ -53,7 +53,35 @@ const deleteMovie = async (req, res) => {
   }
 };
 
+/**
+ * Controller Function to Get a Single Movie
+ * @returns moive Get
+ */
+const getMovie = async (req,res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
+
+    if(!movie){
+      
+    }
+     return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Successfully Fetched the Movie details",
+      data: movie,
+    });
+  } catch (error) {
+      return res.status(500).json({
+      success: false,
+      error: error,
+      message: "Something Want Wrong",
+      data: {},
+    });
+  }
+}
+
 module.exports = {
   createMovie,
   deleteMovie,
+  getMovie
 };

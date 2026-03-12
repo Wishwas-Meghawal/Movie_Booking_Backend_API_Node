@@ -1,12 +1,16 @@
-const MovieController = require('../controllers/movie.controller.js');
+const movieController = require('../controllers/movie.controller.js');
 
 const routes = (app) =>{
 
   // routes function takes express app object as parameter
 
-  app.post('/mba/api/v1/movies',MovieController.createMovie);
+  app.post('/mba/api/v1/movies',movieController.createMovie);
 
-  app.delete('/mba/api/v1/movies/:movieId',MovieController.deleteMovie)
+  app.delete('/mba/api/v1/movies/:id',movieController.deleteMovie);
+
+  app.get('/mba/api/v1/movies/:id',movieController.getMovie);
+
+
 }
 
 module.exports = routes;
