@@ -1,10 +1,25 @@
 const { response } = require("express");
 const Movie = require("../models/movie.model.js");
+const movieService = require("../services/movie.services.js");
 
 /**
  * Controller Function to Create a New Movie
  * @returns moive created
  */
+
+
+const errResponseBody = {
+  err:{},
+  data:{},
+  message:"Something Want Wrong, cnanot process the request",
+  success: false
+}
+const successResponseBody = {
+  err:{},
+  data:{},
+  message:"Successfully processed the request",
+  success: true
+}
 
 const createMovie = async (req, res) => {
   try {
@@ -57,26 +72,21 @@ const deleteMovie = async (req, res) => {
  * Controller Function to Get a Single Movie
  * @returns moive Get
  */
+
 const getMovie = async (req,res) => {
   try {
-    const movie = await Movie.findById(req.params.id);
+    const response = await movieService.getMovieById(req.params.id);
 
-    if(!movie){
-      
+    if(response.err){
+      errResponseBody.err = response.err;
+      return res.status(response.code).json(errResponseBody)
     }
-     return res.status(200).json({
-      success: true,
-      error: false,
-      message: "Successfully Fetched the Movie details",
-      data: movie,
-    });
+
+    successResponseBody.data = response;
+     return res.status(200).json(successResponseBody);
+     
   } catch (error) {
-      return res.status(500).json({
-      success: false,
-      error: error,
-      message: "Something Want Wrong",
-      data: {},
-    });
+      return res.status(500).json(errResponseBody);
   }
 }
 
