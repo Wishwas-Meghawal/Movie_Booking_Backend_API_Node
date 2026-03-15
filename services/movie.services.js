@@ -1,7 +1,7 @@
 const Movie = require('../models/movie.model.js');
 
 const getMovieById  = async (id) =>{
-  const movie = Movie.findById(id);
+  const movie = await Movie.findById(id);
 
   if(!movie){
     return{
