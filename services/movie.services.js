@@ -1,5 +1,19 @@
 const Movie = require('../models/movie.model.js');
 
+//Create Movie 
+const createMovie = async(data) =>{
+  const movie = await Movie.create(data);
+  return movie;
+}
+
+//Delete Movie
+const deleteMovie = async(id) =>{
+  const response = await Movie.findByIdAndDelete(id);
+  return response;
+}
+
+
+//Get Movie
 const getMovieById  = async (id) =>{
   const movie = await Movie.findById(id);
 
@@ -13,5 +27,7 @@ const getMovieById  = async (id) =>{
 }
 
 module.exports = {
-  getMovieById
+  getMovieById,
+  deleteMovie,
+  createMovie,
 }
