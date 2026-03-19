@@ -12,7 +12,13 @@ const {successResponseBody,errResponseBody} = require("../utils/responsebody.js"
 
 const createMovie = async (req, res) => {
   try {
-    const movie = await movieService.createMovie(req.body);
+    const response = await movieService.createMovie(req.body);
+
+    if(response.err){
+      errResponseBody.err = response.err;
+      errResponseBody.message = "Validation failed on few parameters of the request body"
+      return res.status(response.code).json(errResponseBody);
+    }
 
     successResponseBody.data = movie;
     successResponseBody.message = "Successfully created the movie";
