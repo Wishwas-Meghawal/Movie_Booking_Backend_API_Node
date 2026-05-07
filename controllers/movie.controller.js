@@ -48,7 +48,7 @@ const deleteMovie = async (req, res) => {
   }
 };
 
-/**
+/**    
  * Controller Function to Get a Single Movie
  * @returns moive Get
  */
@@ -56,7 +56,6 @@ const deleteMovie = async (req, res) => {
 const getMovie = async (req, res) => {
   try {
     const response = await movieService.getMovieById(req.params.id);
-
     if (response.err) {
       errResponseBody.err = response.err;
       return res.status(response.code).json(errResponseBody);
@@ -70,8 +69,27 @@ const getMovie = async (req, res) => {
   }
 };
 
+
+// Update Movie
+const updateMovie = async (req, res) => {
+  try {
+    const response = await movieService.updateMovie(req.params.id, req.body);
+    if(response.err){
+      errResponseBody.err = response.err;
+      errResponseBody.message = "The updates that we are  trying to apply doesn't validate the schema";
+      return res.status(response.code).json(errResponseBody);
+    }
+    successResponseBody.data = response;
+    return res.status(200).json(successResponseBody);
+  } catch (error) {
+    errorResponseBody.err = error;
+    return res.status(500).json(errResponseBody);
+  }
+}
+
 module.exports = {
   createMovie,
   deleteMovie,
   getMovie,
+  updateMovie,
 };
